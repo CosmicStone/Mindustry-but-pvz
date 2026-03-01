@@ -28,7 +28,7 @@ public class EnemySystems {
             PositionComponent pos = positionMapper.get(enemy);
             SimpleMovementComponent move = moveMapper.get(enemy);
 
-            pos.position.sub(move.speed * deltaTime, 0);
+            pos.rect.x -= move.speed * deltaTime;
         }
     }
 }

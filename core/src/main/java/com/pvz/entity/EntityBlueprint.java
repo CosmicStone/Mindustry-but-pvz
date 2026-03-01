@@ -21,8 +21,8 @@ public class EntityBlueprint {
         for (Supplier<Component> supplier : componentSuppliers) {
             Component comp = supplier.get();
             if (comp instanceof Components.PositionComponent) {
-                ((Components.PositionComponent) comp).position.x = x;
-                ((Components.PositionComponent) comp).position.y = y;
+                ((Components.PositionComponent) comp).rect.x = x;
+                ((Components.PositionComponent) comp).rect.y = y;
             }
             entity.add(comp);
         }

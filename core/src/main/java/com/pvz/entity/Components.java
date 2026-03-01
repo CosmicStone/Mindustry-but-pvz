@@ -2,6 +2,7 @@ package com.pvz.entity;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.pvz.resources.AssetsLoader;
 
@@ -45,30 +46,21 @@ public class Components {
     }
 
     public static class PositionComponent implements Component {
-        public Vector2 position;
-        public Vector2 size;
+        public Rectangle rect;
 
-        public PositionComponent(Vector2 position, Vector2 size) {
-            this.position = position;
-            this.size = size;
+        public PositionComponent(Rectangle rect) {
+            this.rect = rect;
         }
 
         public PositionComponent(float x, float y, float width, float height) {
-            this.position = new Vector2(x, y);
-            this.size = new Vector2(width, height);
+            rect = new Rectangle(x, y, width, height);
         }
     }
     public static Supplier<Component> position(float x, float y, float width, float height) {
         return () -> new PositionComponent(x, y, width, height);
     }
-    public static Supplier<Component> position(Vector2 position, Vector2 size) {
-        return () -> new PositionComponent(position, size);
-    }
     public static Supplier<Component> position(float width, float height) {
         return position(0, 0, width, height);
-    }
-    public static Supplier<Component> position(Vector2 size) {
-        return position(new Vector2(0, 0), size);
     }
 
     public static class AttackComponent implements Component {
@@ -154,5 +146,21 @@ public class Components {
     }
     public static Supplier<Component> simpleMovement(float speed) {
         return () -> new SimpleMovementComponent(speed, false);
+    }
+
+    public static class BulletOffsetPositionComponent implements Component {
+        public Vector2 offset;
+        public BulletOffsetPositionComponent(Vector2 offset) {
+            this.offset = offset;
+        }
+        public BulletOffsetPositionComponent(float dx, float dy) {
+            offset = new Vector2(dx, dy);
+        }
+    }
+    public static Supplier<Component> offset(Vector2 offset) {
+        return () -> new BulletOffsetPositionComponent(offset);
+    }
+    public static Supplier<Component> offset(float dx, float dy) {
+        return () -> new BulletOffsetPositionComponent(dx, dy);
     }
 }

@@ -30,7 +30,7 @@ public class EntitySystems {
                 Components.TextureComponent.class).get())) {
                 Components.PositionComponent pos = positionMapper.get(entity);
                 Components.TextureComponent texture = textureMapper.get(entity);
-                batch.draw(texture.texture, pos.position.x, pos.position.y, pos.size.x, pos.size.y);
+                batch.draw(texture.texture, pos.rect.x, pos.rect.y);
             }
         }
     }

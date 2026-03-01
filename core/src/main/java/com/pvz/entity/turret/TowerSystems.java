@@ -5,11 +5,14 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.pvz.entity.Components;
 import com.pvz.entity.Components.AttackComponent;
 import com.pvz.entity.Components.PositionComponent;
 import com.pvz.entity.Components.FactionComponent;
+import com.pvz.entity.Components.SimpleMovementComponent;
+import com.pvz.entity.Components.VelocityComponent;
 import com.pvz.entity.Faction;
 
 public class TowerSystems {
@@ -43,16 +46,20 @@ public class TowerSystems {
             attack.timer += deltaTime;
             if (attack.timer >= attack.cooldown) {
 
-                //Entity enemy = findEnemy();
+                boolean hasEnemy = findEnemy();
 
-                if (true) {
-                    createBullet(turret, pos.position.add(pos.size.scl(1/2f))); // 从炮塔中心发射
+                if (hasEnemy) {
+                    createBullet(turret, pos.rect); // 从炮塔中心发射
                     attack.timer -= attack.cooldown;
                 }
             }
         }
 
-        private void createBullet(Entity turret, Vector2 position) {
+        private boolean findEnemy() {
+            return true;
+        }
+
+        private void createBullet(Entity turret, Rectangle position) {
             Entity bullet = new Entity();
         }
     }

@@ -7,12 +7,14 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
+import javax.swing.text.html.parser.Entity;
+
 public class Grid {
     public static class Cell {
         public int row, col;
         public float x, y;
         public float width, height;
-        public Array<Object> turrets;    //替换类
+        public Array<Entity> turrets;    //替换类
 
         public Cell(int row, int col, float x, float y, float width, float height) {
             this.row = row;
@@ -81,7 +83,7 @@ public class Grid {
     }
 
     /** 在指定格子放置植物（如果可种植） */
-    public boolean placePlant(int row, int col, Object plant) {
+    public boolean placeEntity(int row, int col, Entity plant) {
         if (row < 0 || row >= rows || col < 0 || col >= cols) return false;
         Cell cell = cells[row][col];
         if (cell.isPlantable()) {
