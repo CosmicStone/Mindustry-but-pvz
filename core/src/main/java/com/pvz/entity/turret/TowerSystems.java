@@ -5,23 +5,23 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.math.Vector2;
 import com.pvz.entity.Components;
 import com.pvz.entity.Components.AttackComponent;
 import com.pvz.entity.Components.PositionComponent;
 import com.pvz.entity.Components.FactionComponent;
-import com.pvz.entity.Components.SimpleMovementComponent;
-import com.pvz.entity.Components.VelocityComponent;
 import com.pvz.entity.Faction;
 
 public class TowerSystems {
-    public static class ShootSystem extends IteratingSystem {
+    public static class LineShootingSystem extends IteratingSystem {
         private ComponentMapper<AttackComponent> attackMapper;
         private ComponentMapper<PositionComponent> positionMapper;
         private ComponentMapper<FactionComponent> factionMapper;
         private Engine engine;
 
-        public ShootSystem() {
-            super(Family.all(AttackComponent.class, PositionComponent.class, FactionComponent.class).get());
+        public LineShootingSystem() {
+            super(Family.all(AttackComponent.class, PositionComponent.class, FactionComponent.class)
+                .exclude(Components.SimpleMovementComponent.class, Components.VelocityComponent.class).get());
         }
 
         public void addedToEngine(Engine engine) {
@@ -37,7 +37,23 @@ public class TowerSystems {
             FactionComponent faction = factionMapper.get(turret);
             if (faction.faction != Faction.Turret) return; // 只处理植物
 
+            AttackComponent attack = attackMapper.get(turret);
+            PositionComponent pos = positionMapper.get(turret);
 
+            attack.timer += deltaTime;
+            if (attack.timer >= attack.cooldown) {
+
+                //Entity enemy = findEnemy();
+
+                if (true) {
+                    createBullet(turret, pos.position.add(pos.size.scl(1/2f))); // 从炮塔中心发射
+                    attack.timer -= attack.cooldown;
+                }
+            }
+        }
+
+        private void createBullet(Entity turret, Vector2 position) {
+            Entity bullet = new Entity();
         }
     }
 

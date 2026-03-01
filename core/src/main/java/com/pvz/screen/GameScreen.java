@@ -1,7 +1,6 @@
 package com.pvz.screen;
 
 import com.badlogic.ashley.core.Engine;
-import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -12,15 +11,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.pvz.entity.EntityFactory;
-import com.pvz.entity.EntitySystem;
-import com.pvz.entity.enemy.EnemySystem;
+import com.pvz.entity.EntitySystems;
+import com.pvz.entity.enemy.EnemySystems;
 import com.pvz.grid.Grid;
 import com.pvz.resources.AssetsLoader;
 
 public class GameScreen implements Screen, InputProcessor {
     private SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
+    private Viewport viewport;
     private Grid grid;
     private Rectangle tempRect;
     private boolean mouseDown = false;
@@ -32,7 +34,7 @@ public class GameScreen implements Screen, InputProcessor {
         this.batch = batch;
         shapeRenderer = new ShapeRenderer();
         camera = new OrthographicCamera();
-
+        viewport = new FitViewport(1440, 900, camera);
     }
 
     @Override
@@ -46,11 +48,12 @@ public class GameScreen implements Screen, InputProcessor {
         engine = new Engine();
         factory = new EntityFactory(engine);
 
-        engine.addSystem(new EnemySystem.MoveSystem());
-        engine.addSystem(new EntitySystem.RenderSystem(batch));
+        engine.addSystem(new EnemySystems.MoveSystem());
+        engine.addSystem(new EntitySystems.RenderSystem(batch));
 
-        Entity testTurret = factory.create("testTurret", 0, 0);
-        Entity testEnemy = factory.create("testEnemy", 640, 0);
+        Rectangle r = grid.getCellAt(0, 0).getBounds();
+        factory.create("testTurret", r.x, r.y);
+        factory.create("testEnemy", 1400 + 48, r.y);
     }
 
     @Override
@@ -76,7 +79,7 @@ public class GameScreen implements Screen, InputProcessor {
 
     @Override
     public void resize(int width, int height) {
-
+        viewport.update(width, height);
     }
 
     @Override

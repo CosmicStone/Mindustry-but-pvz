@@ -3,11 +3,12 @@ package com.pvz.entity;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class EntitySystem {
-    public static class RenderSystem extends com.badlogic.ashley.core.EntitySystem {
+public class EntitySystems {
+    public static class RenderSystem extends EntitySystem {
         private ComponentMapper<Components.TextureComponent> textureMapper;
         private ComponentMapper<Components.PositionComponent> positionMapper;
         private final SpriteBatch batch;

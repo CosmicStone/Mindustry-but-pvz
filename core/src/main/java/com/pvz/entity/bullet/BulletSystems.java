@@ -1,4 +1,4 @@
 package com.pvz.entity.bullet;
 
-public class BulletSystem {
+public class BulletSystems {
 }

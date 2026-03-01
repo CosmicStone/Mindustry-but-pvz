@@ -5,13 +5,10 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.pvz.entity.Components;
 import com.pvz.entity.Components.PositionComponent;
 import com.pvz.entity.Components.SimpleMovementComponent;
-import com.pvz.entity.Components.FactionComponent;
-import com.pvz.entity.Faction;
 
-public class EnemySystem {
+public class EnemySystems {
     public static class MoveSystem extends IteratingSystem {
         private ComponentMapper<PositionComponent> positionMapper;
         private ComponentMapper<SimpleMovementComponent> moveMapper;
@@ -21,15 +18,15 @@ public class EnemySystem {
         }
 
         public void addedToEngine(Engine engine) {
+            super.addedToEngine(engine);
             positionMapper = ComponentMapper.getFor(PositionComponent.class);
             moveMapper = ComponentMapper.getFor(SimpleMovementComponent.class);
         }
 
         @Override
-        protected void processEntity(Entity entity, float deltaTime) {
-
-            PositionComponent pos = positionMapper.get(entity);
-            SimpleMovementComponent move = moveMapper.get(entity);
+        protected void processEntity(Entity enemy, float deltaTime) {
+            PositionComponent pos = positionMapper.get(enemy);
+            SimpleMovementComponent move = moveMapper.get(enemy);
 
             pos.position.sub(move.speed * deltaTime, 0);
         }

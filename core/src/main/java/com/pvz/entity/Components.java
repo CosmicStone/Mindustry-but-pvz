@@ -72,27 +72,29 @@ public class Components {
     }
 
     public static class AttackComponent implements Component {
-        public int damage;
+        public float multiplier;
         public int amount;
         public float cooldown;
         public float timer;
 
-        public AttackComponent(int damage, int amount, float cooldown, float timer) {
-            this.damage = damage;
+        public AttackComponent(float multiplier, int amount, float cooldown, float timer) {
+            this.multiplier = multiplier;
             this.amount = amount;
             this.cooldown = cooldown;
             this.timer = timer;
         }
     }
-
-    public static Supplier<Component> attack(int damage, float cooldown) {
-        return attack(damage, 0,0f, cooldown);
+    public static Supplier<Component> attack(int amount, float cooldown) {
+        return attack(1f, amount,cooldown, 0);
     }
-    public static Supplier<Component> attack(int damage, float cooldown, float timer) {
-        return attack(damage, 0, cooldown, timer);
+    public static Supplier<Component> attack(int amount, float cooldown, float timer) {
+        return attack(1f, amount, cooldown, timer);
     }
-    public static Supplier<Component> attack(int damage, int amount, float cooldown, float timer) {
-        return () -> new AttackComponent(damage, amount, cooldown, timer);
+    public static Supplier<Component> attack(float multiplier, int amount, float cooldown) {
+        return attack(multiplier, 0, cooldown, 0);
+    }
+    public static Supplier<Component> attack(float multiplier, int amount, float cooldown, float timer) {
+        return () -> new AttackComponent(multiplier, amount, cooldown, timer);
     }
 
     public static class FactionComponent implements Component {

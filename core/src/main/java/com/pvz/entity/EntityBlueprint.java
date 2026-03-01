@@ -26,7 +26,17 @@ public class EntityBlueprint {
             }
             entity.add(comp);
         }
-            engine.addEntity(entity);
-            return entity;
+        engine.addEntity(entity);
+        return entity;
+    }
+
+    public Entity create(Engine engine) {
+        Entity entity = new Entity();
+        for (Supplier<Component> supplier : componentSuppliers) {
+            Component comp = supplier.get();
+            entity.add(comp);
+        }
+        engine.addEntity(entity);
+        return entity;
     }
 }

@@ -34,7 +34,7 @@ public class Main extends ApplicationAdapter {
             accumulator -= STEP_TIME;
         }
 
-        ScreenManager.getInstance().render(deltaTime - accumulator);
+        ScreenManager.getInstance().render(STEP_TIME);
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(Color.BLACK);
@@ -49,5 +49,10 @@ public class Main extends ApplicationAdapter {
         ScreenManager.getInstance().dispose();
         AssetsLoader.getInstance().dispose();
         shapeRenderer.dispose();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        ScreenManager.getInstance().getCurrentScreen().resize(width, height);
     }
 }

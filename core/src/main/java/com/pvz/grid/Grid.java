@@ -75,6 +75,11 @@ public class Grid {
         return cells[row][col];
     }
 
+    public Cell getCellAt(int row, int col) {
+        if (row < 0 || col < 0 || row >= rows || col >= cols) return null;
+        return cells[row][col];
+    }
+
     /** 在指定格子放置植物（如果可种植） */
     public boolean placePlant(int row, int col, Object plant) {
         if (row < 0 || row >= rows || col < 0 || col >= cols) return false;

@@ -51,4 +51,8 @@ public class ScreenManager {
         currentScreen = null;
         batch.dispose();
     }
+
+    public Screen getCurrentScreen() {
+        return currentScreen;
+    }
 }
