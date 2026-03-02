@@ -6,23 +6,20 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import com.pvz.entity.EntityFactory;
 
 import javax.swing.text.html.parser.Entity;
 
 public class Grid {
     public static class Cell {
         public int row, col;
-        public float x, y;
-        public float width, height;
+        public Rectangle rect;
         public Array<Entity> turrets;    //替换类
 
         public Cell(int row, int col, float x, float y, float width, float height) {
             this.row = row;
             this.col = col;
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.height = height;
+            rect = new Rectangle(x, y, width, height);
             turrets = new Array<>();
         }
 
@@ -31,7 +28,7 @@ public class Grid {
         }
 
         public Rectangle getBounds() {
-            return new Rectangle(x, y, width, height);
+            return new Rectangle(rect);
         }
     }
 
@@ -83,12 +80,12 @@ public class Grid {
     }
 
     /** 在指定格子放置植物（如果可种植） */
-    public boolean placeEntity(int row, int col, Entity plant) {
+    public boolean placeEntity(int row, int col, EntityFactory factory, String entityId) {
         if (row < 0 || row >= rows || col < 0 || col >= cols) return false;
         Cell cell = cells[row][col];
         if (cell.isPlantable()) {
-            cell.turrets.add(plant);
-            //plant.setPosition(cell.x, cell.y); // 设置植物位置
+            //Entity entity = factory.create(entityId, cell.getBounds().x, cell.getBounds().y);
+            //cell.turrets.add(entity);
             return true;
         }
         return false;
